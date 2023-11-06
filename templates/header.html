@@ -17,6 +17,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'articleapp:list' %}">내가 쓴 글</a>
               </li>
+              {% if target_profile.family_name is not None and target_profile.family_name != '' %}
+                <li class="nav-item">
+                  <a href="{% url 'profileapp:detail' %}?next={% url 'home' %}" class="nav-link">Family 설정</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a href="{% url 'profileapp:create' %}?next={% url 'home' %}" class="nav-link">Family 만들기</a>
+                </li>
+<!--              {% endif %}-->
               <li class="nav-item">
                 <a href="{% url 'accountapp:logout' %}?next={% url 'home' %}" class="nav-link">로그아웃</a>
               </li>

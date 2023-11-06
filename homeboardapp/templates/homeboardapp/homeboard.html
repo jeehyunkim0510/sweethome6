@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+ {% if articles %}
+    <main>
+        {% for article in articles %}
+        <div class="container  justify-content-center align-content-around row-gap-3 column-gap-3  ">
+            <div class="row align-items-center h-25 shadow-lg p-4">
+                <div class="col-12 col-lg-4 overflow-auto">
+                    <div class="container justify-content-center">
+                        <div class="row align-items-center " style="float: none; margin: auto;">
+                            <div class="col-6">
+                                <img src="{{ article.image.url }}" class="img-fluid" alt="Article Image" style="width: 200px; height: 200px; object-fit: cover;">
+                            </div>
+                            <div class="col-6" style="height: 100px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;">
+                                <div style="color: black; text-decoration: none; margin: 8px 0;">
+                                    <h4 style="margin: 0;">{{ article.created_at }}</h4>
+                                </div>
+                                <div style="color: black; text-decoration: none; margin: 8px 0;">
+                                    <a href="{% url 'articleapp:detail' pk=article.pk %}" style="text-decoration: none; color: black;">자세히보기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="col-12 col-lg-8 lh-lg overflow-hidden align-center ">
+                  <p>{{ article.content|slice:":200" }}</p>
+               </div>
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+
+        <div class="pagination" style="display: flex; justify-content: center; margin-top: 20px; font-size: 1.2em;">
+            <span class="step-links" style="display: flex;">
+                {% if articles.has_previous %}
+                    <a href="?page=1" style="text-decoration: none; color: black; margin-right: 1ex;">&laquo; first</a>
+                    <a href="?page={{ articles.previous_page_number }}" style="text-decoration: none; color: black; margin-right: 1ex;">previous</a>
+                {% endif %}
+
+                <span class="current" style="margin: 0 10px; text-decoration: none; color: black;">
+                    Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                </span>
+
+                {% if articles.has_next %}
+                    <a href="?page={{ articles.next_page_number }}" style="text-decoration: none; color: black; margin-left: 1ex;">next</a>
+                    <a href="?page={{ articles.paginator.num_pages }}" style="text-decoration: none; color: black; margin-left: 1ex;">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+            <h1>새로운 게시글을 써보세요!</h1>
+        </div>
+    {% endif %}
+    <script src="{% static 'js/pagination.js' %}"></script>
+{% endblock %}

@@ -7,3 +7,4 @@ class FamilyCreationForm(ModelForm):
     class Meta:
         model = Family
         fields = ['family_name']
+
